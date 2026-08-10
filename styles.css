@@ -1,0 +1,397 @@
+/* Monica Cheng — travel & tourism UGC portfolio
+   Design reference: assets/design/reference.png (1440 × 1024)
+
+   Two faces only, both self-hosted so the page has no third-party dependency:
+   Libre Caslon Display for the name and display lines, Switzer for everything else. */
+
+@font-face {
+  font-family: "Libre Caslon Display";
+  src: url("assets/fonts/libre-caslon-display-400-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+                 U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Libre Caslon Display";
+  src: url("assets/fonts/libre-caslon-display-400-latin-ext.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF,
+                 U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Switzer";
+  src: url("assets/fonts/switzer-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Switzer";
+  src: url("assets/fonts/switzer-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+:root {
+  --paper:      #F4F3F0;
+  --ink:        #12161B;
+  --ink-soft:   #2F3336;
+  --ink-mute:   #5B6065;
+  --rule:       #D6D5D2;   /* rule above the client credit */
+  --rule-hair:  #CBCAC8;   /* masthead hairline */
+  --rule-soft:  #E7E6E4;   /* nav divider */
+  --rule-mid:   #CAC9C7;   /* credits divider */
+  --tick:       #7E8185;   /* short rule under the headline */
+
+  --serif: "Libre Caslon Display", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans:  "Switzer", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+
+  /* 42px gutter and 725/1440 split, measured off the reference */
+  --gutter: 42px;
+  --split: 50.35%;
+  --masthead-h: 88px;
+  --copy-inset: 53px;   /* content sits 95px from the page edge */
+  --copy-width: 344px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: inherit; text-decoration: none; }
+
+svg { fill: none; stroke: currentColor; stroke-width: 1; }
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 12px 18px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  z-index: 10;
+}
+.skip:focus { left: 0; }
+
+/* ---------------------------------------------------------------- masthead */
+
+.masthead {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  height: var(--masthead-h);
+  padding: 0 var(--gutter);
+}
+
+/* The hairline stops where the photograph begins. */
+.masthead::after {
+  content: "";
+  position: absolute;
+  left: var(--gutter);
+  right: calc(100% - var(--split));
+  bottom: 0;
+  height: 1px;
+  background: var(--rule-hair);
+}
+
+.wordmark { display: block; margin-top: 9px; }
+
+.wordmark__name {
+  display: block;
+  font-family: var(--serif);
+  font-size: 17.5px;
+  line-height: 1;
+  letter-spacing: .348em;
+  text-transform: uppercase;
+}
+
+.wordmark__role {
+  display: block;
+  margin-top: 5px;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: .215em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.wordmark__role span { margin: 0 .35em; }
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  margin-top: 5px;
+  font-size: 11.6px;
+  letter-spacing: .142em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.nav__link { padding-block: 6px; transition: opacity .2s ease; }
+.nav__link:hover { opacity: .55; }
+
+.nav__divider {
+  width: 1px;
+  height: 34px;
+  background: var(--rule-soft);
+  margin-inline: 8px;
+}
+
+.nav__link--cta { display: inline-flex; align-items: center; gap: 14px; }
+.nav__link--cta .icon-arrow { width: 30px; }
+
+.icon-arrow {
+  width: 34px;
+  height: 8px;
+  flex: none;
+  stroke-width: 1;
+}
+
+/* -------------------------------------------------------------------- hero */
+
+.hero {
+  display: grid;
+  grid-template-columns: var(--split) 1fr;
+  min-height: calc(100vh - var(--masthead-h));
+  min-height: calc(100svh - var(--masthead-h));
+}
+
+.hero__panel {
+  display: flex;
+  padding: 148px var(--gutter) 140px calc(var(--gutter) + var(--copy-inset));
+}
+
+.hero__copy {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 560px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: .088em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.icon-pin { width: 14px; height: 16px; stroke-width: 1.1; }
+
+.eyebrow__sep { color: #A8A6A1; margin: 0 5px; }
+
+.display {
+  margin: 33px 0 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 90px;
+  line-height: .9;
+  letter-spacing: -.021em;
+  max-width: 470px;
+}
+
+.tick {
+  display: block;
+  width: 50px;
+  height: 1.5px;
+  margin-top: 30px;
+  background: var(--tick);
+}
+
+.lede {
+  margin: 22px 0 0;
+  max-width: var(--copy-width);
+  font-size: 15.5px;
+  line-height: 22px;
+  color: var(--ink-soft);
+}
+
+.cta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 40px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--ink);
+  font-size: 13.5px;
+  letter-spacing: .155em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: opacity .2s ease;
+}
+
+.cta:hover { opacity: .6; }
+
+/* --------------------------------------------------------------- credits */
+
+.credits {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  /* the emblem and its rule sit 14px further left than the body copy */
+  margin-top: auto;
+  margin-left: -14px;
+  padding-top: 30px;
+  border-top: 1px solid var(--rule);
+  width: min(562px, 100%);
+}
+
+.credits__client { display: flex; align-items: center; gap: 17px; }
+
+.credits__emblem { 
+  /* width: 51px; */
+  height: 51px;
+  flex: none; 
+}
+
+.credits__stack { display: block; }
+
+.credits__label {
+  display: block;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: .19em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink-mute);
+}
+
+.credits__name {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--serif);
+  font-size: 24.5px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.credits__divider {
+  width: 1px;
+  align-self: stretch;
+  min-height: 50px;
+  background: var(--rule-mid);
+}
+
+.credits__contact {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  font-size: 15px;
+}
+
+.icon-mail { width: 23px; height: 16px; flex: none; stroke-width: 1.1; }
+
+.credits__contact a {
+  border-bottom: 1px solid #9C9A96;
+  padding-bottom: 3px;
+  transition: border-color .2s ease;
+}
+
+.credits__contact a:hover { border-color: var(--ink); }
+
+/* ----------------------------------------------------------------- media */
+
+.hero__media { margin: 0; }
+
+.hero__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 58% 50%;
+}
+
+/* ------------------------------------------------------------ responsive */
+
+@media (max-width: 1360px) {
+  :root { --copy-inset: 34px; }
+  .display { font-size: 80px; max-width: 420px; }
+}
+
+@media (max-width: 1180px) {
+  :root { --copy-inset: 18px; --gutter: 34px; }
+  .display { font-size: 70px; max-width: 366px; }
+  .hero__panel { padding-top: 110px; padding-bottom: 92px; }
+  .nav { gap: 26px; }
+}
+
+/* Below this the credit row no longer fits beside the divider, so it stacks. */
+@media (max-width: 1300px) {
+  .credits { flex-direction: column; align-items: flex-start; gap: 22px; width: auto; }
+  .credits__divider { display: none; }
+}
+
+@media (max-width: 980px) {
+  .display { font-size: 58px; max-width: 305px; }
+}
+
+/* Phone: the photograph moves under the copy and the split collapses. */
+@media (max-width: 860px) {
+  :root { --gutter: 26px; --copy-inset: 0px; --masthead-h: auto; }
+
+  .masthead {
+    flex-wrap: wrap;
+    gap: 18px 24px;
+    padding-block: 22px;
+  }
+
+  .masthead::after { right: var(--gutter); }
+
+  .nav { width: 100%; gap: 22px; }
+  .nav__divider { height: 22px; margin-inline: auto 0; }
+
+  .hero {
+    display: block;
+    min-height: 0;
+  }
+
+  .hero__panel { padding: 54px var(--gutter) 46px; }
+
+  .hero__copy { max-width: none; }
+
+  .display { font-size: clamp(40px, 11.6vw, 64px); max-width: 8em; }
+
+  .lede { max-width: 34em; }
+
+  .credits { margin-top: 46px; margin-left: 0; width: auto; max-width: none; }
+
+  .hero__media { height: 108vw; max-height: 620px; }
+}
+
+@media (max-width: 520px) {
+  .eyebrow { font-size: 10px; letter-spacing: .15em; }
+  .cta { gap: 16px; font-size: 11px; }
+  .credits__name { font-size: 19px; }
+  .credits__contact { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
